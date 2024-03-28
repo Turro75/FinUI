@@ -1,19 +1,25 @@
 #ifndef _DIALOG_H_
 #define _DIALOG_H_
 
+#include <functional>
 #include <string>
 #include <vector>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+
+#include <SDL.h>
+#include <SDL_ttf.h>
+
+#include "sdl_ttf_multifont.h"
 #include "window.h"
 
 class CDialog : public CWindow
 {
     public:
 
-    // Constructor
-    // Coordinates = 0 => centered
-    CDialog(const std::string &p_title, const Sint16 p_x, const Sint16 p_y);
+    // x_fn and y_fn are function that return dialog coordinates.
+    // They are functions so that we can handle moving the dialog on resize.
+    // Empty functions mean centered.
+    CDialog(const std::string &p_title, std::function<Sint16()> x_fn = {},
+        std::function<Sint16()> y_fn = {});
 
     // Destructor
     virtual ~CDialog(void);
@@ -24,14 +30,22 @@ class CDialog : public CWindow
     // Add a menu option
     void addOption(const std::string &p_option);
 
+    // Sets the color of the borders and title background.
+    void setBorderColor(SDL_Color color) { m_borderColor = color; }
+
     // Init. Call after all options are added.
     void init(void);
 
     // Accessors
-    const Sint16 &getX(void) const;
-    const Sint16 &getY(void) const;
-    const SDL_Surface * const getImage(void) const;
+    int getX() const { return m_x; }
+    int getY() const { return m_y; }
     const unsigned int &getHighlightedIndex(void) const;
+
+    int border_x() const { return border_x_; };
+    int border_y() const { return border_y_; };
+    int width() const { return width_; };
+    int height() const { return height_; };
+    int line_height() const { return line_height_; };
 
     private:
 
@@ -40,18 +54,40 @@ class CDialog : public CWindow
     CDialog(const CDialog &p_source);
     const CDialog &operator =(const CDialog &p_source);
 
+    void onResize() override;
+
     // Key press management
-    virtual const bool keyPress(const SDL_Event &p_event);
+    bool keyPress(const SDL_Event &event, SDLC_Keycode key,
+        ControllerButton button) override;
 
     // Key hold management
-    virtual const bool keyHold(void);
+    bool keyHold() override;
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    bool gamepadHold(SDL_GameController *controller) override;
+#endif
+
+    bool mouseDown(int button, int x, int y) override;
+    bool mouseWheel(int dx, int dy) override;
 
     // Draw
-    virtual void render(const bool p_focus) const;
+    void render(const bool p_focus) const override;
 
     // Move cursor
     const bool moveCursorUp(const bool p_loop);
     const bool moveCursorDown(const bool p_loop);
+
+    void freeResources();
+
+    // Returns the line index at the given coordinates or -1.
+    int getLineAt(int x, int y) const;
+
+    // Dimensions in physical pixels.
+    int border_x_, border_y_;
+    int padding_x_;
+    int line_height_;
+    int width_, height_;
+
+    SDL_Color m_borderColor;
 
     // Number of titles (0 or 1), labels, and options
     bool m_nbTitle;
@@ -60,7 +96,10 @@ class CDialog : public CWindow
 
     // List of lines
     std::vector<std::string> m_lines;
+    SDL_Surface *m_titleImg;
     std::vector<SDL_Surface *> m_linesImg;
+    std::vector<SDL_Surface *> m_linesImgCursor1;
+    std::vector<SDL_Surface *> m_linesImgCursor2;
 
     // The highlighted item
     unsigned int m_highlightedLine;
@@ -73,17 +112,20 @@ class CDialog : public CWindow
     SDL_Surface *m_cursor2;
 
     // Coordinates
-    Sint16 m_x;
-    Sint16 m_y;
-    Sint16 m_cursorX;
-    Sint16 m_cursorY;
+    std::function<Sint16()> m_x_fn;
+    std::function<Sint16()> m_y_fn;
+    int m_x, m_y;
+    int m_cursorX, m_cursorY;
+
+    // Relative coordinates, for better resize handling.
+    float relative_x;
+    float relative_y;
 
     // Line clip
     mutable SDL_Rect m_clip;
 
     // Pointers to resources
-    TTF_Font *m_font;
-    TTF_Font *m_font_sm;
+    const Fonts &m_fonts;
 };
 
 #endif

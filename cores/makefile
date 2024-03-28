@@ -1,7 +1,9 @@
 # this logic was broken out from picoarch's all-in-one makefile
 
 CORES = fceumm gambatte gpsp pcsx_rearmed picodrive snes9x2005_plus
-CORES+= beetle-pce-fast beetle-vb fake-08 mednafen_supafaust mgba pokemini mame2003-plus race # extras
+CORES+= beetle-pce-fast beetle-vb fake-08 mednafen_supafaust mgba pokemini race fbneo mame2003-plus prboom puae
+CORES+= retroarch
+ 
 
 ###############################
 
@@ -45,6 +47,27 @@ snes9x2005_plus_FLAGS = USE_BLARGG_APU=1
 mame2003-plus_REPO = https://github.com/libretro/mame2003-plus-libretro
 mame2003-plus_CORE = mame2003_plus_libretro.so
 
+fbneo_REPO = https://github.com/libretro/fbneo
+fbneo_CORE = fbneo_libretro.so
+#same version as garlicos
+fbneo_HASH = db9f7e9
+fbneo_BUILD_PATH = fbneo/src/burner/libretro
+
+prboom_REPO = https://github.com/libretro/libretro-prboom
+prboom_CORE = prboom_libretro.so
+
+retroarch_REPO = https://github.com/libretro/RetroArch
+retroarch_CORE = retroarch.elf
+#retroarch 1.14
+retroarch_HASH = ad89b0c
+#retroarch 1.15
+#retroarch_HASH = 6616b80
+retroarch_MAKEFILE = Makefile.rg35xx
+
+puae_REPO = https://github.com/libretro/libretro-uae
+puae_BR = 2.6.1
+puae_CORE = puae2021_libretro.so
+
 ###############################
 
 PATCH = git apply
@@ -60,7 +83,7 @@ $1_BUILD_PATH ?= $(1)
 
 src/$(1):
 	mkdir -p src
-	cd src && git clone $(if $($1_HASH),,--depth 1) --recursive $$($(1)_REPO) $(1)
+	cd src && git clone $(if $($1_HASH),,--depth 1) --recursive $$($(1)_REPO) $(if $($1_BR),--branch $($1_BR),) $(1)
 	$(if $($1_HASH),cd src/$$($1_BUILD_PATH) && git checkout $($1_HASH) && echo $($1_HASH),)
 
 src/$(1)/.patched: src/$(1)
@@ -69,15 +92,14 @@ src/$(1)/.patched: src/$(1)
 output/$(1)_libretro.so: src/$(1)/.patched
 	mkdir -p output
 	cd src/$$($1_BUILD_PATH) && $$($1_MAKE) $(PROCS)
-	mv src/$$($1_BUILD_PATH)/$(if $($(1)_CORE),$($(1)_CORE),$(1)_libretro.so) ./output
+	cp src/$$($1_BUILD_PATH)/$(if $($(1)_CORE),$($(1)_CORE),$(1)_libretro.so) ./output
 
 clone-$(1): src/$(1)
 
 patch-$(1): src/$(1)/.patched
 
 clean-$(1):
-	test ! -d src/$(1) || cd src/$$($1_BUILD_PATH) && $$($1_MAKE) clean
-	rm -rf output/$(1)_libretro.so
+	cd src/$$($(1)_BUILD_PATH) && $$($(1)_MAKE) clean
 
 $(1): output/$(1)_libretro.so
 
@@ -91,7 +113,10 @@ $(foreach CORE,$(CORES),$(eval $(call TEMPLATE,$(CORE))))
 
 cores: $(foreach CORE,$(CORES),$(CORE))
 
-clean: $(foreach CORE,$(CORES),clean-$(CORE))
+CLEANCORES = $(addprefix clean-,$(CORES))
+
+clean: $(CLEANCORES)
+	rm -rf ./output
 
 nuke:
 	rm -rf ./output

@@ -3,10 +3,13 @@
 
 #include <string>
 #include <set>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-#include "fileLister.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 #include "def.h"
+#include "fileLister.h"
+#include "resourceManager.h"
+#include "sdl_ttf_multifont.h"
 
 class CPanel
 {
@@ -24,6 +27,10 @@ class CPanel
     // Move cursor
     const bool moveCursorUp(unsigned char p_step);
     const bool moveCursorDown(unsigned char p_step);
+    void moveCursorToVisibleLineIndex(int index);
+
+    // Returns the viewport line index at the given coordinates or -1.
+    int getLineAt(int x, int y) const;
 
     // Open selected item
     const bool open(const std::string &p_path = "");
@@ -38,7 +45,7 @@ class CPanel
     const std::string &getHighlightedItem(void) const;
 
     // Selected file with full path
-    const std::string getHighlightedItemFull(void) const;
+    std::string getHighlightedItemFull(void) const;
 
     // Current path
     const std::string &getCurrentPath(void) const;
@@ -61,6 +68,8 @@ class CPanel
     void selectAll(void);
     void selectNone(void);
 
+    void setX(int x) { m_x = x; }
+
     private:
 
     // Forbidden
@@ -68,8 +77,32 @@ class CPanel
     CPanel(const CPanel &p_source);
     const CPanel &operator =(const CPanel &p_source);
 
+    // Returns the number of currently visible list items (lines).
+    int getNumVisibleListItems() const;
+
     // Adjust camera
     void adjustCamera(void);
+
+    // Resources:
+    SDL_Surface *icon_dir() const;
+    SDL_Surface *icon_file() const;
+    SDL_Surface *icon_img() const;
+    SDL_Surface *icon_ipk() const;
+    SDL_Surface *icon_opk() const;
+    SDL_Surface *icon_symlink() const;
+    SDL_Surface *icon_up() const;
+    SDL_Surface *cursor1() const;
+    SDL_Surface *cursor2() const;
+
+    int list_y() const;
+    int list_height() const;
+    int line_height() const;
+    int header_height() const;
+    int header_padding_top() const;
+    int footer_y() const;
+    int footer_height() const;
+    int footer_padding_top() const;
+    int width() const;
 
     // File lister
     CFileLister m_fileLister;
@@ -81,7 +114,7 @@ class CPanel
     unsigned int m_camera;
 
     // X coordinate
-    const Sint16 m_x;
+    int m_x;
 
     // Highlighted line
     unsigned int m_highlightedLine;
@@ -90,12 +123,9 @@ class CPanel
     std::set<unsigned int> m_selectList;
 
     // Pointers to resources
-    SDL_Surface *m_iconDir;
-    SDL_Surface *m_iconFile;
-    SDL_Surface *m_iconUp;
-    SDL_Surface *m_cursor1;
-    SDL_Surface *m_cursor2;
-    TTF_Font *m_font;
+    const CResourceManager &resources_;
+
+    const Fonts &m_fonts;
 };
 
 #endif

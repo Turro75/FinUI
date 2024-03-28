@@ -23,6 +23,7 @@ echo on > /sys/devices/b0230000.mmc/mmc_host/mmc1/power/control
 export CPU_SPEED_MENU=504000 # 500 MHz
 export CPU_SPEED_GAME=1008000 # 1.0 GHz
 export CPU_SPEED_PERF=1296000 # 1.3 GHz
+export CPU_SPEED_MAX=1488000 # 1.5 GHz
 echo userspace > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
 # Enable all cores (0, 1, 2, 3)

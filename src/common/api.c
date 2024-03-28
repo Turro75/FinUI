@@ -1255,6 +1255,9 @@ int PAD_justPressed(int btn)	{ return pad.just_pressed & btn; }
 int PAD_isPressed(int btn)		{ return pad.is_pressed & btn; }
 int PAD_justReleased(int btn)	{ return pad.just_released & btn; }
 int PAD_justRepeated(int btn)	{ return pad.just_repeated & btn; }
+int PAD_anyJustReleased(void)	{ return pad.just_released!=BTN_NONE; }
+
+
 
 int PAD_tappedMenu(uint32_t now) {
 	#define MENU_DELAY 250 // also in POW_update()
@@ -1482,7 +1485,8 @@ void POW_update(int* _dirty, int* _show_setting, POW_callback_t before_sleep, PO
 		charge_start = now;
 	}
 	
-	if (power_start && now-power_start>=1000) {
+	//if (power_start && now-power_start>=1000) {
+	if (power_start && now-power_start>=100) {
 		if (before_sleep) before_sleep();
 		POW_powerOff();
 	}
