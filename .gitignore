@@ -8,6 +8,7 @@ other/DinguxCommander/output/
 private/
 releases/
 src/boot/output/
+toolchain-garlicos/
 
 *.[od]
 *.dll

@@ -1287,7 +1287,7 @@ int main (int argc, char *argv[]) {
 	
 	simple_mode = exists(SIMPLE_MODE_PATH);
 
-	LOG_info("FinUI\n");
+	LOG_info("MyFinUIRG35XXOG\n");
 	InitSettings();
 	
 	SDL_Surface* screen = GFX_init(MODE_MAIN);
@@ -1526,7 +1526,7 @@ int main (int argc, char *argv[]) {
 					else GFX_blitButtonGroup((char*[]){ "MENU","BRIGHTNESS",  NULL }, screen, 0);
 				}
 				else {
-					GFX_blitButtonGroup((char*[]){ "POWER","SLEEP",  NULL }, screen, 0);
+					GFX_blitButtonGroup((char*[]){ "POWER","SHUTDOWN",  NULL }, screen, 0);
 				}
 				
 				GFX_blitButtonGroup((char*[]){ "B","BACK",  NULL }, screen, 1);
@@ -1608,7 +1608,7 @@ int main (int argc, char *argv[]) {
 					GFX_blitButtonGroup((char*[]){ "X","RESUME",  NULL }, screen, 0);
 				}
 				else {
-					GFX_blitButtonGroup((char*[]){ "POWER","SLEEP",  NULL }, screen, 0);
+					GFX_blitButtonGroup((char*[]){ "POWER","SHUTDOWN",  NULL }, screen, 0);
 				}
 			
 				if (total==0) {

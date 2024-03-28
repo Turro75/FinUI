@@ -27,14 +27,16 @@ RUN apt-get -y update && apt-get -y install \
 	vim \
 	wget \
 	zip \
+	mc \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/workspace
 WORKDIR /root
 
 COPY support .
-RUN ./build-toolchain.sh
+RUN ./build-toolchain.sh && rm -rf buildroot/output/build/* && rm -rf buildroot/output/dl/*
 RUN cat ./setup-env.sh >> .bashrc
+
 
 VOLUME /root/workspace
 WORKDIR /root/workspace

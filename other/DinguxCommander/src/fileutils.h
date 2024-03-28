@@ -12,6 +12,8 @@ namespace File_utils
 
     void moveFile(const std::vector<std::string> &p_src, const std::string &p_dest);
 
+    void symlinkFile(const std::vector<std::string> &p_src, const std::string &p_dest);
+
     void removeFile(const std::vector<std::string> &p_files);
 
     void executeFile(const std::string &p_file);
@@ -24,6 +26,8 @@ namespace File_utils
 
     const bool fileExists(const std::string &p_path);
 
+    std::string getLowercaseFileExtension(const std::string &name);
+
     const unsigned long int getFileSize(const std::string &p_file);
 
     void formatSize(std::string &p_size);
@@ -32,13 +36,7 @@ namespace File_utils
 
     const std::string getPath(const std::string &p_path);
 
-    const std::string getSelfExecutionPath(void);
-
-    const std::string getSelfExecutionName(void);
-
     void stringReplace(std::string &p_string, const std::string &p_search, const std::string &p_replace);
-
-    const std::string specialChars(const std::string &p_string);
 
     // Dialogs
 

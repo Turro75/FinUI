@@ -16,7 +16,7 @@ endif
 BUILD_HASH=HEAD
 
 RELEASE_TIME!=TZ=GMT date +%Y%m%d
-RELEASE_BASE=FinUI-$(RELEASE_TIME)b
+RELEASE_BASE=MyFinUI-$(RELEASE_TIME)b
 RELEASE_DOT!=find ./releases/. -regex ".*/$(RELEASE_BASE)-[0-9]+-base\.zip" -printf '.' | wc -m
 RELEASE_NAME=$(RELEASE_BASE)-$(RELEASE_DOT)
 
@@ -33,6 +33,7 @@ sys:
 	cd ./src/keymon && make
 	cd ./src/minarch && make
 	cd ./src/minui && make
+	cd ./src/minput && make
 	cd ./src/overclock && make
 	cd ./src/boot && ./build.sh
 
@@ -42,7 +43,7 @@ all-cores:
 tools:
 	cd ./src/clock && make
 	cd ./src/clear_recent && make
-	cd ./other/DinguxCommander && make -j
+	cd ./other/DinguxCommander && make 
 
 dtb:
 	cd ./src/dts/ && make
@@ -72,6 +73,7 @@ bundle:
 	cp ./src/libmsettings/libmsettings.so ./build/SYSTEM/rg35xx/lib
 	cp ./src/keymon/keymon.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minarch/minarch.elf ./build/SYSTEM/rg35xx/bin
+	cp ./cores/output/retroarch.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/overclock/overclock.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minui/minui.elf ./build/SYSTEM/rg35xx/paks/MinUI.pak
 	cp ./src/clock/clock.elf ./build/EXTRAS/Tools/rg35xx/Clock.pak
@@ -86,7 +88,10 @@ bundle:
 	cp ./cores/output/snes9x2005_plus_libretro.so ./build/SYSTEM/rg35xx/cores
 
 	# extras
+	cp ./cores/output/fbneo_libretro.so ./build/EXTRAS/Emus/rg35xx/FBN.pak
 	cp ./cores/output/mame2003_plus_libretro.so ./build/EXTRAS/Emus/rg35xx/MAME.pak
+	cp ./cores/output/prboom_libretro.so ./build/EXTRAS/Emus/rg35xx/DOOM.pak
+	cp ./cores/output/puae2021_libretro.so ./build/EXTRAS/Emus/rg35xx/PUAE.pak
 	cp ./cores/output/fake08_libretro.so ./build/EXTRAS/Emus/rg35xx/P8.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/MGBA.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/SGB.pak
@@ -96,6 +101,8 @@ bundle:
 	cp ./cores/output/pokemini_libretro.so ./build/EXTRAS/Emus/rg35xx/PKM.pak
 	cp ./other/DinguxCommander/output/DinguxCommander ./build/EXTRAS/Tools/rg35xx/Files.pak
 	cp -R ./other/DinguxCommander/res ./build/EXTRAS/Tools/rg35xx/Files.pak/
+	cp ./src/minput/minput.elf ./build/EXTRAS/Tools/rg35xx/Input.pak
+
 
 readmes:
 	fmt -w 40 -s ./skeleton/BASE/README.txt > ./build/BASE/README.txt
@@ -111,13 +118,16 @@ zip:
 	cd ./build/PAYLOAD && zip -r MinUI.zip .system
 	mv ./build/PAYLOAD/MinUI.zip ./build/BASE
 
-	cd ./build/BASE && zip -r ../../releases/$(RELEASE_NAME)-base.zip Bios Roms Saves dmenu.bin MinUI.zip README.txt INSTALL.txt SHORTCUTS.txt
-	cd ./build/EXTRAS && zip -r ../../releases/$(RELEASE_NAME)-extras.zip Bios Emus Roms Saves Tools README.txt
+#	cd ./build/BASE && zip -r ../../releases/$(RELEASE_NAME)-base.zip Bios Roms Saves dmenu.bin MinUI.zip README.txt INSTALL.txt SHORTCUTS.txt
+#	cd ./build/EXTRAS && zip -r ../../releases/$(RELEASE_NAME)-extras.zip Bios Emus Roms Saves Tools README.txt
 
 	rm -fr ./build/FULL
 	mkdir ./build/FULL
 	cp -fR ./build/BASE/* ./build/FULL/
 	cp -fR ./build/EXTRAS/* ./build/FULL/
+	rm -rf ./build/BASE
+	rm -rf ./build/EXTRAS
+	rm -rf ./build/PAYLOAD
 	cd ./build/FULL && zip -r ../../releases/$(RELEASE_NAME)-full.zip Bios Emus Roms Saves Tools dmenu.bin MinUI.zip INSTALL.txt SHORTCUTS.txt
 
 	echo "$(RELEASE_NAME)" > ./build/latest.txt
@@ -131,6 +141,7 @@ clean:
 	cd ./src/libmsettings && make clean
 	cd ./src/keymon && make clean
 	cd ./src/minui && make clean
+	cd ./src/minput && make clean
 	cd ./src/minarch && make clean
 	cd ./src/boot && rm -rf ./output
 	cd ./cores && make clean

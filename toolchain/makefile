@@ -2,7 +2,7 @@
 .PHONY: clean
 
 TOOLCHAIN_NAME=rg35xx-toolchain
-WORKSPACE_DIR := $(shell cd .. && pwd)
+WORKSPACE_DIR := $(shell cd ../ && pwd)
 
 CONTAINER_NAME=$(shell docker ps -f "ancestor=$(TOOLCHAIN_NAME)" --format "{{.Names}}")
 BOLD=$(shell tput bold)
@@ -10,6 +10,8 @@ NORM=$(shell tput sgr0)
 
 .build: Dockerfile
 	$(info $(BOLD)Building $(TOOLCHAIN_NAME)...$(NORM))
+#	docker buildx create --use --name larger_log --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1
+#	docker buildx build --progress plain -t $(TOOLCHAIN_NAME) .
 	docker build -t $(TOOLCHAIN_NAME) .
 	touch .build
 

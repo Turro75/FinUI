@@ -26,6 +26,7 @@ for FILE in $(find . -type f -name "*.patch" 2>/dev/null); do
 done
 
 cd ~/buildroot
+
 # patches for buildroot itself
 patch -p1 < ~/toolchain-expose-BR2_TOOLCHAIN_EXTRA_EXTERNAL_LIBS-for-all-toolchain-types-2017.11.1.diff
 
@@ -36,6 +37,5 @@ else
 	export FORCE_UNSAFE_CONFIGURE=1
 	make oldconfig
 	make world
-	
 	~/install-toolchain.sh
 fi

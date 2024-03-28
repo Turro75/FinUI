@@ -62,6 +62,7 @@ enum {
 	ASSET_BAR_BG_MENU,
 	ASSET_UNDERLINE,
 	ASSET_DOT,
+	ASSET_HOLE,
 	
 	ASSET_COLORS,
 	
@@ -160,6 +161,8 @@ enum {
 	BTN_ID_R1,
 	BTN_ID_L2,
 	BTN_ID_R2,
+	BTN_ID_L3,
+	BTN_ID_R3,
 	BTN_ID_MENU,
 	BTN_ID_PLUS,
 	BTN_ID_MINUS,
@@ -183,6 +186,9 @@ enum {
 	BTN_R1		= 1 << BTN_ID_R1,
 	BTN_L2		= 1 << BTN_ID_L2,
 	BTN_R2		= 1 << BTN_ID_R2,
+	BTN_L3		= 1 << BTN_ID_L3,
+	BTN_R3		= 1 << BTN_ID_R3,
+
 	BTN_MENU	= 1 << BTN_ID_MENU,
 	BTN_PLUS	= 1 << BTN_ID_PLUS,
 	BTN_MINUS	= 1 << BTN_ID_MINUS,
@@ -200,6 +206,8 @@ int PAD_justPressed(int btn);
 int PAD_isPressed(int btn);
 int PAD_justReleased(int btn);
 int PAD_justRepeated(int btn);
+int PAD_anyJustReleased(void);
+
 
 int PAD_tappedMenu(uint32_t now); // special case, returns 1 on release of BTN_MENU within 250ms and BTN_PLUS/BTN_MINUS haven't been pressed
 
