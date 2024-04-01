@@ -5,7 +5,7 @@ endif
 TARGET = clock
 
 CC = $(CROSS_COMPILE)gcc
-CFLAGS   = -Os -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a -fomit-frame-pointer
+CFLAGS   = -Os -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI} -march=armv7-a -fomit-frame-pointer
 CFLAGS  += -I. -I../common -DPLATFORM=\"$(UNION_PLATFORM)\" -Ofast
 LDFLAGS	 = -ldl -lSDL -lSDL_image -lSDL_ttf -lmsettings -lpthread -lm -lz
 

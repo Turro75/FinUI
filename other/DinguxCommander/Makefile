@@ -3,7 +3,7 @@
 #
 
 CXX := $(CROSS_COMPILE)g++
-CXXFLAGS := -Os -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a
+CXXFLAGS := -Os -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI} -march=armv7-a
 SDL_CONFIG := $(PREFIX)/bin/sdl-config
 CXXFLAGS += $(shell $(SDL_CONFIG) --cflags) -I$(PREFIX)/include/SDL -I./
 
@@ -44,7 +44,7 @@ SUM := @echo
 
 OUTDIR := ./output
 
-EXECUTABLE := $(OUTDIR)/DinguxCommander
+EXECUTABLE := $(OUTDIR)/DinguxCommander.elf
 
 OBJS :=	main.o commander.o config.o dialog.o fileLister.o fileutils.o keyboard.o panel.o resourceManager.o \
 	screen.o sdl_ttf_multifont.o sdlutils.o text_edit.o utf8.o text_viewer.o image_viewer.o  window.o \
