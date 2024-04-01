@@ -1532,6 +1532,7 @@ static void Input_init(const struct retro_input_descriptor *vars) {
 		ButtonMapping* mapping = &default_button_mapping[i];
 		LOG_info("DEFAULT %s (%s): <%s>\n", core_button_names[mapping->retro], mapping->name, (mapping->local==BTN_ID_NONE ? "NONE" : device_button_names[mapping->local]));
 		mapping->name = (char*)core_button_names[mapping->retro];
+		if (core_button_names[mapping->retro]) mapping->name = (char*)core_button_names[mapping->retro];
 	}
 	
 	puts("---------------------------------");
@@ -1777,6 +1778,13 @@ static bool environment_callback(unsigned cmd, void *data) { // copied from pico
 		break;
 	}
 	
+	case RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT: {
+		puts("RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT"); fflush(stdout);
+		int result = RETRO_SAVESTATE_CONTEXT_NORMAL;
+		if (data)
+            *(int*)data = result;
+		break;
+	}
 	// unused
 	// case RETRO_ENVIRONMENT_SET_FRAME_TIME_CALLBACK: {
 	// 	puts("RETRO_ENVIRONMENT_SET_FRAME_TIME_CALLBACK"); fflush(stdout);
@@ -4282,10 +4290,11 @@ int main(int argc , char* argv[]) {
 	options_menu.items[1].desc = (char*)core.version;
 	
 	Core_load();
+	Input_init(NULL);
 	Config_readOptions(); // but others load and report options later (eg. nes)
 	Config_readControls(); // restore controls (after the core has reported its defaults)
 	Config_free();
-	Input_init(NULL);
+
 		
 	SND_init(core.sample_rate, core.fps);
 	

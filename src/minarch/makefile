@@ -5,8 +5,8 @@ endif
 TARGET = minarch
 
 CC = $(CROSS_COMPILE)gcc
-CFLAGS   = -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a -fomit-frame-pointer
-CFLAGS  += -I. -I../common -I./libretro-common/include -DPLATFORM=\"$(UNION_PLATFORM)\" -Ofast  -std=gnu99
+CFLAGS   = -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI} -march=armv7-a -fomit-frame-pointer
+CFLAGS  += -I. -I../common -I./libretro-common/include -DPLATFORM=\"$(UNION_PLATFORM)\"  -std=gnu99
 CFLAGS	+= -Os -flto
 LDFLAGS	 = -ldl -lSDL -lSDL_image -lSDL_ttf -lmsettings -lpthread -lm -lz
 # CFLAGS  += -Wall -Wno-unused-variable -Wno-unused-function -Wno-format-overflow
