@@ -7,3 +7,7 @@ In the patches directory: create a patch file that adds an RG35XX target to the 
 In the `skeleton/EXTRAS/Emus/rg35xx/` directory I create a new pak for the emulator and add it to the bundle step of MinUI's makefile. I also create the requisite Bios, Roms, and Saves folders and document the addition in the extras readme.
 
 Fin
+
+# Adding precompiled cores
+
+by using the softfp toolchain it is possible use as is the cores available on garlicos 
