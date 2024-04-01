@@ -126,7 +126,7 @@ index 0000000000..688c037c1a
 +
 +OBJ :=
 +LINK := $(CXX)
-+DEF_FLAGS := -march=armv7-a -mtune=cortex-a9 -mfloat-abi=hard -mfpu=neon-fp16 -ffast-math -fomit-frame-pointer
++DEF_FLAGS := -march=armv7-a -mtune=cortex-a9 -mfloat-abi=${FBABI} -mfpu=neon-fp16 -ffast-math -fomit-frame-pointer
 +DEF_FLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 +DEF_FLAGS += -I. -Ideps -Ideps/stb -DMIYOO=1 -DDINGUX -MMD -DRG35XX=1
 +DEF_FLAGS += -Wall -Wno-unused-variable -flto

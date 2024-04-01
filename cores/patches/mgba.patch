@@ -16,7 +16,7 @@ index 108148f4579f4727146e5b8c1e05ef7382654208..4ff34d4c2b5c6031ce4c3256f1b70dab
 +   fpic := -fPIC
 +   PLATFORM_DEFINES += -D_GNU_SOURCE -DHAVE_STRTOF_L -DHAVE_LOCALE
 +   CFLAGS += -fomit-frame-pointer -ffast-math
-+   CFLAGS += -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a
++   CFLAGS += -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI} -march=armv7-a
 +   CFLAGS += -fno-common -ftree-vectorize -funswitch-loops
 +   HAVE_NEON = 1
 +   ARCH = arm

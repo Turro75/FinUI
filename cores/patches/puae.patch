@@ -17,7 +17,7 @@ index fa86aeb..1586ba7 100644
 +   LDFLAGS += -lm -lrt -lpthread -ldl
 +   CFLAGS += -Ofast -flto=4 \
 +           -fmerge-all-constants -fno-math-errno -march=armv7-a \
-+           -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard
++           -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI}
 +   LDFLAGS += -static-libgcc -static-libstdc++ -s
 +#######################################
 +

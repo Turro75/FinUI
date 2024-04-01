@@ -1,9 +1,11 @@
 # this logic was broken out from picoarch's all-in-one makefile
 
 CORES = fceumm gambatte gpsp pcsx_rearmed picodrive snes9x2005_plus
-CORES+= beetle-pce-fast beetle-vb fake-08 mednafen_supafaust mgba pokemini race fbneo mame2003-plus prboom puae
-CORES+= retroarch
- 
+CORES+= beetle-pce-fast mednafen_supafaust mgba puae beetle-vb fake-08 pokemini race fbneo mame2003-plus prboom retroarch
+
+ifeq ($(FBABI), softfp)
+CORES = snes9x2005_plus retroarch
+endif
 
 ###############################
 
@@ -29,11 +31,12 @@ fceumm_REPO = https://github.com/libretro/libretro-fceumm
 
 gambatte_REPO = https://github.com/libretro/gambatte-libretro
 
-gpsp_HASH = 1d1c719 # last known working save states
+#gpsp_HASH = 1d1c719 # last known working save states
 
 mednafen_supafaust_REPO = https://github.com/libretro/supafaust
 
 pcsx_rearmed_MAKEFILE = Makefile.libretro
+pcsx_rearmed_HASH = 1fec8a9
 
 picodrive_REPO = https://github.com/irixxxx/picodrive
 picodrive_MAKEFILE = Makefile.libretro
@@ -50,7 +53,7 @@ mame2003-plus_CORE = mame2003_plus_libretro.so
 fbneo_REPO = https://github.com/libretro/fbneo
 fbneo_CORE = fbneo_libretro.so
 #same version as garlicos
-fbneo_HASH = db9f7e9
+#fbneo_HASH = db9f7e9
 fbneo_BUILD_PATH = fbneo/src/burner/libretro
 
 prboom_REPO = https://github.com/libretro/libretro-prboom
@@ -71,7 +74,7 @@ puae_CORE = puae2021_libretro.so
 ###############################
 
 PATCH = git apply
-PROCS = -j4
+PROCS = -j4 
 
 ###############################
 

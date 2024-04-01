@@ -16,7 +16,7 @@ index 1322d47..6ead168 100644
 +	LDFLAGS += -s $(fpic) -shared -Wl,--version-script=libretro/link.T -Wl,-no-undefined
 +	CFLAGS += -Ofast -DNDEBUG \
 +	-flto -fomit-frame-pointer \
-+	-marm -march=armv7-a -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard
++	-marm -march=armv7-a -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI}
 +	CXXFLAGS += $(CFLAGS)
 +	CPPFLAGS += $(CFLAGS)
 +	ASFLAGS += $(CFLAGS)

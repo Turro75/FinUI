@@ -14,7 +14,7 @@ index 7d7002b3b..af4be5180 100644
 +   AR = $(CROSS_COMPILE)ar
 +   SHARED := -shared -Wl,--version-script=link.T -Wl,-no-undefined
 +	fpic := -fPIC
-+	PLATFORM_FLAGS = -s -Ofast -marm -mtune=cortex-a9 -mfpu=neon-fp16  -mfloat-abi=hard -march=armv7-a -fomit-frame-pointer -flto
++	PLATFORM_FLAGS = -s -Ofast -marm -mtune=cortex-a9 -mfpu=neon-fp16  -mfloat-abi=${FBABI} -march=armv7-a -fomit-frame-pointer -flto
 +	USE_EXPERIMENTAL_FLAGS = 1
 +	HAVE_NEON = 1
 +	USE_CYCLONE = 1

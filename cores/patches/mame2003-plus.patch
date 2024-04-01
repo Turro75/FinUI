@@ -21,7 +21,7 @@ index 21129613..eaf61b92 100644
 +	-falign-functions=1 -falign-jumps=1 -falign-loops=1 \
 +	-fno-unwind-tables -fno-asynchronous-unwind-tables -fno-unroll-loops \
 +	-fmerge-all-constants -fno-math-errno \
-+	-marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard
++	-marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=${FBABI}
 +	CXXFLAGS += $(CFLAGS)
 +	CPPFLAGS += $(CFLAGS)
 +	ASFLAGS += $(CFLAGS)
