@@ -22,7 +22,7 @@ RELEASE_NAME=$(RELEASE_BASE)-$(RELEASE_DOT)
 
 # TODO: this needs to consider the different platforms, eg. rootfs.ext2 should only be copied in rg35xx-toolchain
 
-all: lib sys all-cores tools dtb bundle readmes zip report
+all: lib sys tools all-cores dtb bundle readmes zip report
 
 repack: bundle readmes zip report
 
@@ -53,6 +53,13 @@ bundle:
 	rm -rf ./build
 	mkdir -p ./releases
 	cp -R ./skeleton ./build
+
+ifeq ($(FBABI),softfp)
+# overwrite launchers for retroarch and dinguxcommander which both require LD_PRELOAD=/root/build/SDL-1.2/build/.libs/libSDL-1.2.so.0.11.4 to properly handle inputs
+	cp -rf ./toolchain-soft/modifiedfiles/retroarch_doom_launch.sh ./build/EXTRAS/Emus/rg35xx/DOOM.pak/launch.sh
+	cp -rf ./toolchain-soft/modifiedfiles/retroarch_tools_launch.sh ./build/EXTRAS/Tools/rg35xx/RetroArch.pak/launch.sh
+	cp -rf ./toolchain-soft/modifiedfiles/Dinguxcommander_tools_launch.sh ./build/EXTRAS/Tools/rg35xx/Files.pak/launch.sh
+endif
 
 	# remove authoring detritus
 	cd ./build && find . -type f -name '.keep' -delete
@@ -97,6 +104,7 @@ ifeq ($(FBABI),hard)
 	cp ./cores/output/mednafen_vb_libretro.so ./build/EXTRAS/Emus/rg35xx/VB.pak
 	cp ./cores/output/pokemini_libretro.so ./build/EXTRAS/Emus/rg35xx/PKM.pak
 else
+	cp /root/build/SDL-1.2/build/.libs/libSDL-1.2.so.0.11.4 ./build/SYSTEM/rg35xx/lib
 	cp ./cores/softfp/fceumm_libretro.so ./build/SYSTEM/rg35xx/cores
 	cp ./cores/softfp/gambatte_libretro.so ./build/SYSTEM/rg35xx/cores
 	cp ./cores/softfp/gpsp_libretro.so ./build/SYSTEM/rg35xx/cores
@@ -138,9 +146,9 @@ zip:
 	mkdir ./build/FULL
 	cp -fR ./build/BASE/* ./build/FULL/
 	cp -fR ./build/EXTRAS/* ./build/FULL/
-	rm -rf ./build/BASE
-	rm -rf ./build/EXTRAS
-	rm -rf ./build/PAYLOAD
+#	rm -rf ./build/BASE
+#	rm -rf ./build/EXTRAS
+#	rm -rf ./build/PAYLOAD
 	cd ./build/FULL && zip -r ../../releases/$(RELEASE_NAME).zip Bios Emus Roms Saves Tools dmenu.bin MinUI.zip INSTALL.txt SHORTCUTS.txt
 
 	echo "$(RELEASE_NAME)" > ./build/latest.txt

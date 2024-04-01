@@ -1,40 +1,18 @@
-# Steward's MiyooCFW Toolchain (uClibc) 
-Dockerfiles to build images with the toolchain and other dependencies for compiling software for the [Miyoo Custom Firmware (CFW)](https://github.com/TriForceX/MiyooCFW). Uses the uClibc toolchain from steward. Based off of aconor's image' with some additional tools installed.
+# Toolchain Docker image
 
-See https://github.com/TriForceX/MiyooCFW/wiki/Build-Source for more info.
+Based on the [nfriedly toolchain Docker image](https://github.com/nfriedly/miyoo-toolchain/) by nfriedly.
 
-## Local Usage
+Vsync pached SDL 1.2.15 is pre-compiled and installed to /opt/miyoo
 
-Requires docker - https://www.docker.com/
+## Installation
 
-You have to pass in an absolute path to the source code for the first part of the `--volume` param.
+With Docker installed and running, `make shell` builds the toolchain and drops into a shell inside the container. The container's `~/workspace` is bound to `./workspace` by default. The toolchain is located at `/opt/` inside the container.
 
-```sh
-docker pull nfriedly/miyoo-toolchain:steward
-docker run --volume //c/users/desktop/path/to/miyoo/:/src/ -it nfriedly/miyoo-toolchain:steward
-# starting here, commands are executed inside the docker image
-cd /src
-make
-exit
-# now back to your computer
-```
+After building the first time, unless a dependency of the image has changed, `make shell` will skip building and drop into the shell. Running `make shell` from another window while already in a running shell will attach to the already running image.
 
-## GitHub Actions Usage
+## Workflow
 
-See this example: https://github.com/MiyooCFW/gmenunx/pull/6/files
+- On your host machine, clone repositories into `./workspace` and make changes as usual.
+- In the container shell, find the repository in `~/workspace` and build as usual.
 
-## Development 
-
-To build:
-
-```sh
-docker build --tag nfriedly/miyoo-toolchain:steward .
-```
-
-To publish:
-
-```
-docker push nfriedly/miyoo-toolchain:steward
-```
-
-(Obviously you'll have to change `nfriedly` to your own docker hub username if your're not me.)
+See [setup-env.sh](./build/setup-env.sh) for some useful vars for compiling that are exported automatically.

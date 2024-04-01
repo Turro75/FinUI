@@ -75,6 +75,10 @@ puae_CORE = puae2021_libretro.so
 
 PATCH = git apply
 PROCS = -j4 
+ifeq ($(FBABI), softfp)
+PROCS = -j1
+endif
+
 
 ###############################
 

@@ -1,16 +1,20 @@
 diff --git a/Makefile.rg35xx b/Makefile.rg35xx
 new file mode 100644
-index 0000000000..688c037c1a
+index 0000000000..9a222c3c4f
 --- /dev/null
 +++ b/Makefile.rg35xx
-@@ -0,0 +1,211 @@
+@@ -0,0 +1,215 @@
 +#########################
 +## Toolchain variables ##
 +#########################
 +
 +# Default toolchain directory
-+TOOLCHAIN_DIR=/opt/rg35xx-toolchain
-+
++TOOLCHAIN_DIR=/opt/rg35xx-toolchain/usr
++MYHOST=arm-buildroot-linux-gnueabihf
++ifeq ($(FBABI),softfp)
++TOOLCHAIN_DIR=/opt/miyoo
++MYHOST=arm-miyoo-linux-uclibcgnueabi
++endif
 +
 +# All toolchain-related variables may be
 +# overridden via the command line
@@ -18,26 +22,26 @@ index 0000000000..688c037c1a
 +ifdef GCW0_CC
 +CC                    = $(GCW0_CC)
 +else
-+CC                    = $(TOOLCHAIN_DIR)/usr/bin/arm-linux-gcc
++CC                    = $(TOOLCHAIN_DIR)/bin/arm-linux-gcc
 +endif
 +
 +ifdef GCW0_CXX
 +CXX                   = $(GCW0_CXX)
 +else
-+CXX                   = $(TOOLCHAIN_DIR)/usr/bin/arm-linux-g++
++CXX                   = $(TOOLCHAIN_DIR)/bin/arm-linux-g++
 +endif
 +
 +ifdef GCW0_STRIP
 +STRIP                 = $(GCW0_STRIP)
 +else
-+STRIP                 = $(TOOLCHAIN_DIR)/usr/bin/arm-linux-strip
++STRIP                 = $(TOOLCHAIN_DIR)/bin/arm-linux-strip
 +endif
 +
-+GCW0_SDL_CONFIG      ?= $(TOOLCHAIN_DIR)/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/bin/sdl-config
-+GCW0_FREETYPE_CONFIG ?= $(TOOLCHAIN_DIR)/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/bin/freetype-config
++GCW0_SDL_CONFIG      ?= $(TOOLCHAIN_DIR)/$(MYHOST)/sysroot/usr/bin/sdl-config
++GCW0_FREETYPE_CONFIG ?= $(TOOLCHAIN_DIR)/$(MYHOST)/sysroot/usr/bin/freetype-config
 +
-+GCW0_INC_DIR         ?= $(TOOLCHAIN_DIR)/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include
-+GCW0_LIB_DIR         ?= $(TOOLCHAIN_DIR)/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/lib
++GCW0_INC_DIR         ?= $(TOOLCHAIN_DIR)/$(MYHOST)/sysroot/usr/include
++GCW0_LIB_DIR         ?= $(TOOLCHAIN_DIR)/$(MYHOST)/sysroot/usr/lib
 +
 +#########################
 +#########################
