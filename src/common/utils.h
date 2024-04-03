@@ -9,8 +9,10 @@ int exactMatch(char* str1, char* str2);
 int hide(char* file_name);
 
 void getDisplayName(const char* in_name, char* out_name);
+void getDisplayNameParens(const char* in_name, char* out_name);
 void getEmuName(const char* in_name, char* out_name);
 void getEmuPath(char* emu_name, char* pak_path);
+void getParentFolderName(const char* in_name, char* out_name);
 
 void normalizeNewline(char* line);
 void trimTrailingNewlines(char* line);

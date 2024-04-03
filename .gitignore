@@ -23,3 +23,6 @@ toolchain-garlicos/
 .build
 .DS_Store
 rg35xx-toolchain.tar.xz
+src/mytest/mytest.c
+src/mytest/mytest.pak/launch.sh
+src/mytest/makefile
