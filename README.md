@@ -1,3 +1,24 @@
+Update 03-04-2024
+
+Added boxart and savestate from main menu
+
+
+Some fancy additions to the minui app:
+- Added BoxArt to main menu (see below for details)
+- in case a savestate is present for the currently selected rom the same graphic state selector available in the menu game appears
+- modified the meaning of the left and right d-pad buttons (previously next-previous page) now they allow to select across the state slots
+- function next-previous page moved to L2 - R2 buttons. 
+
+BoxArt:
+I set the software to use the same garlicos specs:
+create a folder called Imgs on each rom directory, the file type must be png, having the same rom name without original extension
+i.e. the rom "Castelvania - Aria of Sorrow (USA).zip" must have a boxart file in "Imgs/Castelvania - Aria of Sorrow (USA).png"
+As per garlicos the file must be 640x480. For best results I suggest to use these skraper settings [https://github.com/timault/Garlic-Os-Skraper-](https://github.com/timault/Garlic-Os-Skraper-) 
+
+
+
+
+
 # MyFinUI
 
 MyFinUI is a fork of [FinUI](https://github.com/robshape/FinUI). MinUI is
