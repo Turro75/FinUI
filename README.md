@@ -15,6 +15,16 @@ create a folder called Imgs on each rom directory, the file type must be png, ha
 i.e. the rom "Castelvania - Aria of Sorrow (USA).zip" must have a boxart file in "Imgs/Castelvania - Aria of Sorrow (USA).png"
 As per garlicos the file must be 640x480. For best results I suggest to use these skraper settings [https://github.com/timault/Garlic-Os-Skraper-](https://github.com/timault/Garlic-Os-Skraper-) 
 
+Example of a Rom with boxart and save state available:
+https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_boxart_state.png
+
+Example of a Rom with boxart and no save state available:
+https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_boxart_nostate.png
+
+Example of a Rom without boxart and save state available:
+https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_noboxart_savestate.png
+
+
 
 
 
