@@ -5,7 +5,7 @@ Added boxart and savestate from main menu
 
 Some fancy additions to the minui app:
 - Added BoxArt to main menu (see below for details)
-- in case a savestate is present for the currently selected rom the same graphic state selector available in the menu game appears
+- in case a savestate is present for the currently selected rom the same graphic state selector available in the menu game appears, select the one You want then press X.
 - modified the meaning of the left and right d-pad buttons (previously next-previous page) now they allow to select across the state slots
 - function next-previous page moved to L2 - R2 buttons. 
 
@@ -16,13 +16,13 @@ i.e. the rom "Castelvania - Aria of Sorrow (USA).zip" must have a boxart file in
 As per garlicos the file must be 640x480. For best results I suggest to use these skraper settings [https://github.com/timault/Garlic-Os-Skraper-](https://github.com/timault/Garlic-Os-Skraper-) 
 
 Example of a Rom with boxart and save state available:
-https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_boxart_state.png
+(./github/minui_boxart_state.png)
 
 Example of a Rom with boxart and no save state available:
-https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_boxart_nostate.png
+(./github/minui_boxart_nostate.png)
 
 Example of a Rom without boxart and save state available:
-https://github.com/Turro75/MyFinUI_RG35XXOG/blob/main/github/minui_noboxart_savestate.png
+(./github/minui_noboxart_savestate.png)
 
 
 
