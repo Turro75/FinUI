@@ -1,3 +1,9 @@
+Update 01-05-2024
+
+as FinUI has been closed, even this repo won't be updated anymore.
+Anyway I moved to a new project based on latest MinUI called MyMinUI https://github.com/Turro75/MyMinUI/releases/tag/MyMinUI-20240501b which also supports the Miyoo Mini Plus.
+There is also a plan to extend the support to rg353 family, let's see.
+
 Update 03-04-2024
 
 Added boxart and savestate from main menu
